@@ -1,0 +1,75 @@
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h3 class="text-center mb-4 text-primary">Consulta de Cliente</h3>
+
+    <form (submit)="buscarCliente($event)" class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">Tipo de documento</label>
+        <select class="form-select" [(ngModel)]="tipoDocumento" name="tipoDocumento" required>
+          <option value="CC">Cédula</option>
+          <option value="NIT">NIT</option>
+          <option value="PAS">Pasaporte</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Número de documento</label>
+        <input #inputDocumento type="text" class="form-control" [(ngModel)]="numeroDocumento" name="numeroDocumento"
+          required />
+      </div>
+
+      <div class="col-md-3 d-flex flex-md-row flex-column align-items-end gap-2">
+        <button class="btn btn-primary flex-fill" type="submit">Buscar</button>
+        <button class="btn btn-success flex-fill" type="button" (click)="exportar()">Exportar</button>
+      </div>
+
+    </form>
+
+    <div *ngIf="cliente" class="mt-5">
+      <h5 class="border-bottom pb-2 mb-3">Datos del Cliente</h5>
+      <p><strong>Nombre:</strong> {{ cliente.nombre }} {{ cliente.apellido }}</p>
+      <p><strong>Correo:</strong> {{ cliente.email }}</p>
+      <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+      <p><strong>Tipo Documento:</strong> {{ cliente.tipo_documento }}</p>
+      <p><strong>Número Documento:</strong> {{ cliente.numero_documento }}</p>
+
+
+      <div class="mt-4">
+        <h6 class="border-bottom pb-2 mb-3">Compras realizadas</h6>
+
+        <div *ngIf="compras && compras.length > 0; else noCompras">
+          <table class="table table-bordered align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio (COP)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let compra of compras">
+                <tr *ngFor="let producto of compra.productos">
+                  <td>{{ compra.fecha | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ producto.nombre }}</td>
+                  <td>{{ producto.cantidad }}</td>
+                  <td>{{ producto.precio | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+                </tr>
+                <tr class="table-secondary">
+                  <td colspan="3" class="text-end"><strong>Total</strong></td>
+                  <td><strong>{{ compra.total | currency:'COP':'symbol-narrow':'1.0-0' }}</strong></td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+        <ng-template #noCompras>
+          <p class="text-muted text-center mt-3">
+            No se encontraron compras registradas.
+          </p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
