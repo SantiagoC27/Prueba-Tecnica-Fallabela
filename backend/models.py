@@ -1,4 +1,6 @@
-from database import db
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class TipoDocumento(db.Model):
     __tablename__ = 'tipos_documento'
@@ -51,7 +53,7 @@ class Compra(db.Model):
             'cliente_id': self.cliente_id,
             'fecha': self.fecha.isoformat() if self.fecha else None,
             'total': self.total,
-            'productos': [detalle.producto.to_dict() for detalle in self.detalles]
+            'productos': [{**detalle.producto.to_dict(), 'cantidad': detalle.cantidad} for detalle in self.detalles]
         }
 
 

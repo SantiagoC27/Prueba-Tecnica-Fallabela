@@ -1,12 +1,10 @@
 from datetime import date, timedelta
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify, send_file
 from flask_cors import CORS
 from config import Config
-from database import db
-from models import Cliente, Compra
+from models import Cliente, Compra, db
 import pandas as pd
 import io
-import os
 
 app = Flask(__name__)
 app.config.from_object(Config)

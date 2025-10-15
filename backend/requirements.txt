@@ -1,5 +1,5 @@
-flask
-flask-cors
-flask_sqlalchemy
-pandas
-xlsxwriter
+flask              # Framework web
+flask-cors         # Manejo de CORS para APIs
+flask_sqlalchemy   # ORM para base de datos
+pandas             # Manipulación de datos y Excel
+xlsxwriter         # Creación de archivos Excel
